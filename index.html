@@ -3,106 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <title>Memory Game</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background-color: #f0f8ff;
-    }
-    h1 {
-      margin-top: 20px;
-    }
-    .board {
-      display: grid;
-      grid-template-columns: repeat(4, 100px);
-      grid-gap: 10px;
-      justify-content: center;
-      margin-top: 30px;
-    }
-    .card {
-      width: 100px;
-      height: 100px;
-      background-color: #4CAF50;
-      color: white;
-      font-size: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      border-radius: 10px;
-      user-select: none;
-    }
-    .card.flipped {
-      background-color: #fff;
-      color: #4CAF50;
-      border: 2px solid #4CAF50;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h1>Memory Game</h1>
   <div class="board" id="gameBoard"></div>
 
-  <script>
-    const letters = [..."AABBCCDDEEFFGGHH"]; // 8 pairs
-    let shuffled = letters.sort(() => 0.5 - Math.random());
-    const board = document.getElementById("gameBoard");
-    let firstCard = null;
-    let secondCard = null;
-    let lockBoard = false;
-
-    shuffled.forEach(letter => {
-      const card = document.createElement("div");
-      card.classList.add("card");
-      card.dataset.letter = letter;
-      card.textContent = "";
-      board.appendChild(card);
-    });
-
-    board.addEventListener("click", e => {
-      const clicked = e.target;
-
-      if (!clicked.classList.contains("card") || clicked.classList.contains("flipped") || lockBoard) {
-        return;
-      }
-
-      clicked.classList.add("flipped");
-      clicked.textContent = clicked.dataset.letter;
-
-      if (!firstCard) {
-        firstCard = clicked;
-      } else {
-        secondCard = clicked;
-        lockBoard = true;
-
-        if (firstCard.dataset.letter === secondCard.dataset.letter) {
-          firstCard = null;
-          secondCard = null;
-          lockBoard = false;
-        } else {
-          setTimeout(() => {
-            firstCard.classList.remove("flipped");
-            secondCard.classList.remove("flipped");
-            firstCard.textContent = "";
-            secondCard.textContent = "";
-            firstCard = null;
-            secondCard = null;
-            lockBoard = false;
-          }, 1000);
-        }
-      }
-
-      checkWin();
-    });
-
-    function checkWin() {
-      const allFlipped = document.querySelectorAll(".card.flipped").length;
-      if (allFlipped === 16) {
-        setTimeout(() => {
-          alert("You won the game!");
-        }, 200);
-      }
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
